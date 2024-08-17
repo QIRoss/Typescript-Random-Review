@@ -50,6 +50,30 @@ app.delete('/items/:index', (req: Request, res: Response) => {
   }
 });
 
+const users = [
+  { id: 1, name: 'Alice', age: 25 },
+  { id: 2, name: 'Bob', age: 30 },
+  { id: 3, name: 'Charlie', age: 35 },
+  { id: 4, name: 'David', age: 40 },
+  { id: 5, name: 'Eve', age: 45 }
+];
+
+app.get('/usernames', (req: Request, res: Response) => {
+  const usernames = users.map(user => user.name);
+  res.json({ usernames });
+});
+
+app.get('/users/older-than/:age', (req: Request, res: Response) => {
+  const age = parseInt(req.params.age, 10);
+  const olderUsers = users.filter(user => user.age > age);
+  res.json({ olderUsers });
+});
+
+app.get('/users/total-age', (req: Request, res: Response) => {
+  const totalAge = users.reduce((total, user) => total + user.age, 0);
+  res.json({ totalAge });
+});
+
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
